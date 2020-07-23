@@ -31,7 +31,11 @@ const helmet = require("helmet");
 // You can also explicitly set the header to something else, to throw
 // people off. e.g. `helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' })`
 
+// Understanding the attack - https://helmetjs.github.io/docs/hide-powered-by/
+
 // Use `helmet.hidePoweredBy()``
+
+app.use(helmet(hidePoweredBy());
 
 
 
@@ -208,6 +212,7 @@ var ninetyDaysInSeconds = 90*24*60*60;
 
 module.exports = app;
 var api = require('./server.js');
+const { hidePoweredBy } = require('helmet');
 app.use(express.static('public'));
 app.disable('strict-transport-security');
 app.use('/_api', api);
