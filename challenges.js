@@ -5,7 +5,7 @@
 
 var express = require('express'); // Do Not Edit
 var app = express();              // Do Not Edit
-
+const frameguard = require('frameguard');
 // ----
 
 /** - Challenges - *
@@ -31,11 +31,9 @@ const helmet = require("helmet");
 // You can also explicitly set the header to something else, to throw
 // people off. e.g. `helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' })`
 
-// Understanding the attack - https://helmetjs.github.io/docs/hide-powered-by/
-
 // Use `helmet.hidePoweredBy()``
 
-app.use(helmet(hidePoweredBy());
+app.use(helmet.hidePoweredBy());
 
 
 
@@ -78,6 +76,8 @@ app.use(frameguard({ action: 'deny' }));
 
 // Use `helmet.xssFilter()`
 
+app.use(helmet.xssFilter());
+
 
 
 /** 5) Avoid inferring the response MIME type - `helmet.noSniff()` */
@@ -90,6 +90,8 @@ app.use(frameguard({ action: 'deny' }));
 // instructing the browser to not bypass the provided `Content-Type`.
 
 // Use `helmet.noSniff()`
+
+app.use(helmet.noSniff());
 
 
 
@@ -104,7 +106,7 @@ app.use(frameguard({ action: 'deny' }));
 
 // Use `helmet.ieNoOpen()`
 
-
+app.use(helmet.ieNoOpen());
 
 /**  7) Ask browsers to access your site via HTTPS only - `helmet.hsts()` */
 
@@ -215,7 +217,6 @@ var ninetyDaysInSeconds = 90*24*60*60;
 
 module.exports = app;
 var api = require('./server.js');
-const { hidePoweredBy } = require('helmet');
 app.use(express.static('public'));
 app.disable('strict-transport-security');
 app.use('/_api', api);
