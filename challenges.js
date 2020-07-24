@@ -52,6 +52,9 @@ app.use(helmet(hidePoweredBy());
 // We don't need our app to be framed, so you should use `helmet.frameguard()`
 // passing to it the configuration object `{action: 'deny'}`
 
+//Correct version, but breaking the tests
+//app.use(helmet.frameguard({action: 'deny'}));
+app.use(frameguard({ action: 'deny' }));
  
 
 /** 4) Mitigate the risk of XSS - `helmet.xssFilter()` */
