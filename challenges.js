@@ -125,6 +125,7 @@ app.use(helmet.ieNoOpen());
 // policy we will intercept and restore the header, after inspecting it for testing.
 
 var ninetyDaysInSeconds = 90*24*60*60;
+app.use(helmet.hsts({ maxAge: ninetyDaysInSeconds, force: true }));
 
 
 //**Note**:
@@ -144,6 +145,8 @@ var ninetyDaysInSeconds = 90*24*60*60;
 
 // Use `helmet.dnsPrefetchControl()`
 
+app.use(helmet.dnsPrefetchControl());
+
 
 
 /** 9) Disable Client-Side Caching - `helmet.noCache()` */
@@ -155,6 +158,8 @@ var ninetyDaysInSeconds = 90*24*60*60;
 // use this option only when there is a real need.
 
 // Use helmet.noCache()
+
+app.use(helmet.noCache());
 
 
 
@@ -186,6 +191,12 @@ var ninetyDaysInSeconds = 90*24*60*60;
 // in the `"'self'"` keyword, the single quotes are part of the keyword itself, 
 // so it needs to be enclosed in **double quotes** to be working.
 
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'trusted-cdn.com']
+  }
+}))
 
 
 /** TIP: */ 
@@ -212,6 +223,8 @@ var ninetyDaysInSeconds = 90*24*60*60;
 // We introduced each middleware separately, for teaching purpose, and for
 // ease of testing. Using the 'parent' `helmet()` middleware is easiest, and
 // cleaner, for a real project.
+
+
 
 // ---- DO NOT EDIT BELOW THIS LINE ---------------------------------------
 
